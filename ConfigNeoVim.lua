@@ -27,6 +27,8 @@ vim.o.ignorecase = true         -- Busca ignorando maiúsculas/minúsculas
 vim.o.smartcase = true          -- Mas respeitar se houver maiúsculas
 vim.o.updatetime = 300          -- Melhorar desempenho
 vim.o.timeoutlen = 500          -- Tempo para esperar por atalhos
+vim.o.linespace = 8             -- Aumenta o espaço entre linhas
+vim.o.guifont = "FiraCode Nerd Font:h14" -- Define fonte e tamanho
 
 -- TECLA LÍDER
 vim.g.mapleader = " "
@@ -57,16 +59,16 @@ require("lazy").setup({
     name = "catppuccin",
     config = function()
       require("catppuccin").setup({
-        flavour = "mocha", -- Cor escura (mocha = mais vibrante)
+        flavour = "mocha",
         integrations = {
           treesitter = true,
           telescope = true,
           which_key = true,
-          cmp = true, -- Integração com nvim-cmp
-          nvimtree = true, -- Integração com nvim-tree
+          cmp = true,
+          nvimtree = true,
         },
       })
-      vim.cmd("colorscheme catppuccin-mocha") -- Define o tema para Mocha
+      vim.cmd("colorscheme catppuccin-mocha")
     end,
   },
 
@@ -94,28 +96,14 @@ require("lazy").setup({
   -- Barra lateral com nvim-tree
   {
     "nvim-tree/nvim-tree.lua",
-    dependencies = { "nvim-tree/nvim-web-devicons" }, -- Ícones para arquivos
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("nvim-tree").setup({
-        view = {
-          width = 30, -- Largura da barra lateral
-          side = "left", -- Lado da barra (pode ser "left" ou "right")
-        },
-        renderer = {
-          highlight_git = true, -- Destacar arquivos Git
-          highlight_opened_files = "all",
-        },
-        filters = {
-          dotfiles = false, -- Mostrar arquivos ocultos
-        },
+        view = { width = 30, side = "left" },
+        renderer = { highlight_git = true, highlight_opened_files = "all" },
+        filters = { dotfiles = false },
       })
-      -- Mapeamento para abrir/fechar a barra
-      vim.api.nvim_set_keymap(
-        "n",
-        "<leader>e",
-        ":NvimTreeToggle<CR>",
-        { noremap = true, silent = true }
-      )
+      vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
     end,
   },
 
@@ -134,9 +122,7 @@ require("lazy").setup({
       local cmp = require("cmp")
       cmp.setup({
         snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end,
+          expand = function(args) require("luasnip").lsp_expand(args.body) end,
         },
         mapping = {
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -162,13 +148,6 @@ require("lazy").setup({
         theme = "doom",
         config = {
           header = {
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "███╗   ██╗███████╗██╗   ██╗██╗███╗   ███╗",
             "████╗  ██║██╔════╝██║   ██║██║████╗ ████║",
             "██╔██╗ ██║█████╗  ██║   ██║██║██╔████╔██║",
@@ -181,41 +160,29 @@ require("lazy").setup({
             { icon = "🕒 ", desc = "Recent Files", action = "Telescope oldfiles", key = "r" },
             { icon = "⚙️ ", desc = "Config", action = "edit ~/.config/nvim/init.lua", key = "c" },
           },
-          footer = {"Que grande Nerd!"},
+          footer = { "Que grande Nerd!" },
         },
       })
     end,
   },
-})
 
-
--- CONFIGURAÇÃO DE LSP
-local lspconfig = require("lspconfig")
-
--- Habilitar LSP para linguagens específicas
-lspconfig.pyright.setup({})    -- Python
-lspconfig.ts_ls.setup({})      -- Substituir tsserver por ts_ls
-lspconfig.gopls.setup({})      -- Go
-lspconfig.html.setup({})       -- HTML
-lspconfig.cssls.setup({})      -- CSS
-lspconfig.rust_analyzer.setup({}) -- Rust
-lspconfig.lua_ls.setup({
-  settings = {
-    Lua = {
-      diagnostics = { globals = { "vim" } },
-    },
+  -- Discord Rich Presence
+  {
+    "andweeb/presence.nvim",
+    config = function()
+      require("presence").setup({
+        auto_update = true,
+        neovim_image_text = "Skibidi",
+        main_image = "file",
+        buttons = true,
+        editing_text = "Editando %s",
+        file_explorer_text = "Explorando arquivos",
+        git_commit_text = "Commitando mudanças",
+        plugin_manager_text = "Gerenciando plugins",
+      })
+    end,
   },
 })
-
---Meter numeros do lado esquerdo
-vim.o.number = true
-vim.o.relativenumber = true
-
--- Atualizar o buffer automaticamente
-vim.o.updatetime = 300
-
--- Corrigir um bug que estava a ter 
-require'lspconfig'.lua_ls.setup{}
 
 -- Mensagem de boas-vindas
 vim.cmd([[echo "O maior nerd de sempre KKKKKKKKKKKKKKKKKKKKK"]])
