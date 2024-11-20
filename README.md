@@ -20,15 +20,15 @@ Pré-requisitos
 
 Passos
 
-    Clone este repositório no seu diretório de configuração do Neovim:
+Clone este repositório no seu diretório de configuração do Neovim:
 
-git clone https://github.com/seu-usuario/seu-repo ~/.config/nvim
+    git clone https://github.com/seu-usuario/seu-repo ~/.config/nvim
 
 Abra o Neovim para que o Lazy.nvim instale os plugins automaticamente:
 
     nvim
 
-    Aproveite sua nova configuração!
+Aproveite sua nova configuração!
 
 Mapeamentos
 Teclas principais
