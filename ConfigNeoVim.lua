@@ -52,21 +52,24 @@ map("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
 -- CONFIGURAÇÃO DE PLUGINS
 require("lazy").setup({
   -- Tema Catppuccin
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    config = function()
-      require("catppuccin").setup({
-        flavour = "mocha", -- Escolha entre latte, frappe, macchiato e mocha
-        integrations = {
-          treesitter = true,
-          telescope = true,
-          which_key = true,
-        },
-      })
-      vim.cmd("colorscheme catppuccin-mocha") -- Garante que o tema Mocha será carregado
-    end,
-  },
+-- Tema Catppuccin
+{
+  "catppuccin/nvim",
+  name = "catppuccin",
+  config = function()
+    require("catppuccin").setup({
+      flavour = "mocha", -- Escolha entre latte, frappe, macchiato e mocha
+      integrations = {
+        treesitter = true,
+        telescope = true,
+        which_key = true,
+        cmp = true, -- Integração com nvim-cmp
+        nvimtree = true, -- Integração com nvim-tree
+      },
+    })
+    vim.cmd("colorscheme catppuccin-mocha") -- Define o tema para Mocha
+  end,
+}
 
   -- Navegação com Telescope
   {
