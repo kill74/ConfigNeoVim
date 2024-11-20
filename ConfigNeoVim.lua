@@ -52,24 +52,23 @@ map("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
 -- CONFIGURAÇÃO DE PLUGINS
 require("lazy").setup({
   -- Tema Catppuccin
--- Tema Catppuccin
-{
-  "catppuccin/nvim",
-  name = "catppuccin",
-  config = function()
-    require("catppuccin").setup({
-      flavour = "mocha", -- Escolha entre latte, frappe, macchiato e mocha
-      integrations = {
-        treesitter = true,
-        telescope = true,
-        which_key = true,
-        cmp = true, -- Integração com nvim-cmp
-        nvimtree = true, -- Integração com nvim-tree
-      },
-    })
-    vim.cmd("colorscheme catppuccin-mocha") -- Define o tema para Mocha
-  end,
-}
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    config = function()
+      require("catppuccin").setup({
+        flavour = "mocha", -- Cor escura (mocha = mais vibrante)
+        integrations = {
+          treesitter = true,
+          telescope = true,
+          which_key = true,
+          cmp = true, -- Integração com nvim-cmp
+          nvimtree = true, -- Integração com nvim-tree
+        },
+      })
+      vim.cmd("colorscheme catppuccin-mocha") -- Define o tema para Mocha
+    end,
+  },
 
   -- Navegação com Telescope
   {
@@ -86,7 +85,7 @@ require("lazy").setup({
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
-        ensure_installed = "all", -- Ou especifique linguagens: { "lua", "python" }
+        ensure_installed = { "go", "javascript", "html", "css", "python", "rust", "lua" },
         highlight = { enable = true },
       })
     end,
@@ -165,36 +164,42 @@ require("lazy").setup({
           header = {
             "",
             "",
-            "███████╗███╗   ██╗███████╗██╗   ██╗██╗███╗   ███╗",
-            "██╔════╝████╗  ██║██╔════╝██║   ██║██║████╗ ████║",
-            "███████╗██╔██╗ ██║█████╗  ██║   ██║██║██╔████╔██║",
-            "╚════██║██║╚██╗██║██╔══╝  ╚██╗ ██╔╝██║██║╚██╔╝██║",
-            "███████║██║ ╚████║███████╗ ╚████╔╝ ██║██║ ╚═╝ ██║",
-            "╚══════╝╚═╝  ╚═══╝╚══════╝  ╚═══╝  ╚═╝╚═╝     ╚═╝",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "███╗   ██╗███████╗██╗   ██╗██╗███╗   ███╗",
+            "████╗  ██║██╔════╝██║   ██║██║████╗ ████║",
+            "██╔██╗ ██║█████╗  ██║   ██║██║██╔████╔██║",
+            "██║╚██╗██║██╔══╝  ╚██╗ ██╔╝██║██║╚██╔╝██║",
+            "██║ ╚████║███████╗ ╚████╔╝ ██║██║ ╚═╝ ██║",
+            "╚═╝  ╚═══╝╚══════╝  ╚═══╝  ╚═╝╚═╝     ╚═╝",
           },
           center = {
-            { icon = "🧌 ", desc = "Find File", action = "Telescope find_files", key = "f" },
-            { icon = "🐲 ", desc = "Recent Files", action = "Telescope oldfiles", key = "r" },
-            { icon = "🐋 ", desc = "Restore Session", action = "SessionLoad", key = "s" },
-            { icon = "🛠️ ", desc = "Config", action = "edit ~/.config/nvim/init.lua", key = "c" },
+            { icon = "🔍 ", desc = "Find File", action = "Telescope find_files", key = "f" },
+            { icon = "🕒 ", desc = "Recent Files", action = "Telescope oldfiles", key = "r" },
+            { icon = "⚙️ ", desc = "Config", action = "edit ~/.config/nvim/init.lua", key = "c" },
           },
-          footer = {"O MAIOR NERD DE SEMPRE"},
+          footer = {"Que grande Nerd!"},
         },
       })
     end,
   },
 })
 
+
 -- CONFIGURAÇÃO DE LSP
 local lspconfig = require("lspconfig")
 
 -- Habilitar LSP para linguagens específicas
-lspconfig.pyright.setup({})   -- Python
-lspconfig.ts_ls.setup({})     -- JavaScript/TypeScript
-lspconfig.gopls.setup({})     -- Go
-lspconfig.html.setup({})      -- HTML
-lspconfig.cssls.setup({})     -- CSS
-lspconfig.lua_ls.setup({      -- Lua
+lspconfig.pyright.setup({})    -- Python
+lspconfig.ts_ls.setup({})      -- Substituir tsserver por ts_ls
+lspconfig.gopls.setup({})      -- Go
+lspconfig.html.setup({})       -- HTML
+lspconfig.cssls.setup({})      -- CSS
+lspconfig.rust_analyzer.setup({}) -- Rust
+lspconfig.lua_ls.setup({
   settings = {
     Lua = {
       diagnostics = { globals = { "vim" } },
@@ -202,5 +207,15 @@ lspconfig.lua_ls.setup({      -- Lua
   },
 })
 
+--Meter numeros do lado esquerdo
+vim.o.number = true
+vim.o.relativenumber = true
+
+-- Atualizar o buffer automaticamente
+vim.o.updatetime = 300
+
+-- Corrigir um bug que estava a ter 
+require'lspconfig'.lua_ls.setup{}
+
 -- Mensagem de boas-vindas
-vim.cmd([[echo "QUE GRANDE NERD HAHAHAHAHAH!"]])
+vim.cmd([[echo "O maior nerd de sempre KKKKKKKKKKKKKKKKKKKKK"]])
